@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SupportTicket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SupportTicketController extends Controller
 {
@@ -14,7 +15,8 @@ class SupportTicketController extends Controller
      */
     public function index()
     {
-        //
+        return SupportTicket::where('user_id',Auth::id())->get();
+
     }
 
     /**

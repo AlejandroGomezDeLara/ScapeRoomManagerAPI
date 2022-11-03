@@ -15,10 +15,10 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamp('opening_time');
-            $table->timestamp('closing_time');
+            $table->time('opening_time');
+            $table->time('closing_time');
             $table->integer('day');
             $table->timestamps();
         });

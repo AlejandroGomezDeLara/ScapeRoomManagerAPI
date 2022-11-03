@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompletedReservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompletedReservationController extends Controller
 {
@@ -14,7 +15,7 @@ class CompletedReservationController extends Controller
      */
     public function index()
     {
-        //
+        return CompletedReservation::where('user_id',Auth::id())->get();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GamePrice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GamePriceController extends Controller
 {
@@ -14,7 +15,8 @@ class GamePriceController extends Controller
      */
     public function index()
     {
-        //
+        return GamePrice::where('user_id',Auth::id())->get();
+
     }
 
     /**

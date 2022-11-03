@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ReservationPayment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationPaymentController extends Controller
 {
@@ -14,7 +15,8 @@ class ReservationPaymentController extends Controller
      */
     public function index()
     {
-        //
+        return ReservationPayment::where('user_id',Auth::id())->get();
+
     }
 
     /**

@@ -15,10 +15,10 @@ class CreateGamePricesTable extends Migration
     {
         Schema::create('game_prices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('game_id');
-            $table->foreign('game_id')->references('id')->on('game');
+            $table->unsignedBigInteger('game_id');
+            $table->foreign('game_id')->references('id')->on('games');
             $table->decimal('price');
-            $table->people('number');
+            $table->integer('people');
             $table->timestamps();
         });
     }

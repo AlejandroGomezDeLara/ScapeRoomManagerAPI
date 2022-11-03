@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('avatar');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

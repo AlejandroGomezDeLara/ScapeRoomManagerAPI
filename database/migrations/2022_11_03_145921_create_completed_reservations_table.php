@@ -15,7 +15,7 @@ class CreateCompletedReservationsTable extends Migration
     {
         Schema::create('completed_reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('reservation_id');
+            $table->unsignedBigInteger('reservation_id');
             $table->foreign('reservation_id')->references('id')->on('reservations');
             $table->text('photo');
             $table->time('end_time');

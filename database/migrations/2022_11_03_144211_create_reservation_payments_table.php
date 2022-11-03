@@ -15,9 +15,9 @@ class CreateReservationPaymentsTable extends Migration
     {
         Schema::create('reservation_payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('client_id');
+            $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->unsignedInteger('reservation_id');
+            $table->unsignedBigInteger('reservation_id');
             $table->foreign('reservation_id')->references('id')->on('reservations');
             $table->date('date');
             $table->decimal('total_price');

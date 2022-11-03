@@ -54,9 +54,6 @@ class AuthController extends Controller
     }
 
    
-
-
-
     public function login(Request $request)
     {
 
@@ -99,4 +96,7 @@ class AuthController extends Controller
         'Successfully logged out']);
     }
 
+    public function user(){
+        return Auth::user();
+    }
 }

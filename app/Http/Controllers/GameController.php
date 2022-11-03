@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -14,7 +15,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        return Game::where('user_id',Auth::id())->get();
     }
 
     /**
