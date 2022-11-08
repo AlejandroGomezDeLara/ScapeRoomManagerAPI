@@ -13,27 +13,22 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
 
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed',
-        ]);
+      
 
-        $user = new User([
+
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id'=>2,
+            'avatar' => 'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-File.png',
             'password' => bcrypt($request->password),
-            'phone' => $request->phone,
-            'gender' => $request->gender,
-            'years' => $request->years,
-            'weight' => $request->weight,
-            'height' => $request->height
+            
         ]);
 
 
 
 
-        if ($request->get('avatar') != null) {
+       /*  if ($request->get('avatar') != null) {
             $img = $request->get('avatar');
             $img = str_replace('data:image/jpeg;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
@@ -42,11 +37,9 @@ class AuthController extends Controller
             Storage::disk('public')->put('users/' . $imageName, $img);
             $path = "users/" . $imageName;
             $user->avatar = $path;
-        }
+        } */
 
-        $user->save();
 
-        $this->setGoalsAndInterests($request->goals, $request->interests, $request->training_days, $user);
 
         return response()->json([
             'message' => 'Successfully created user!'
