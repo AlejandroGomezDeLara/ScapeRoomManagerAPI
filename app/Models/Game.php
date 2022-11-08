@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     use HasFactory;
+
+    public function category(){
+        return $this->belongsTo(GameCategory::class);
+    }
+
+    public function subcategory(){
+        return $this->belongsTo(GameSubcategory::class);
+    }
+
+
 }

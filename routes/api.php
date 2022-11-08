@@ -27,13 +27,13 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', [AuthController::class,'logout']);
         Route::get('user', [AuthController::class,'user']);
 
-        Route::resources([
-            'clients' => ClientController::class,
-            'reservations' => ReservationController::class,
-            'employees' => EmployeeController::class,
-            'games' => GameController::class,
-            'schedules' => ScheduleController::class,
-            'tickets' => SupportTicketController::class,
-        ]);
+       
     });
+    Route::resources([
+        'reservations' => ReservationController::class,
+        'employees' => EmployeeController::class,
+        'games' => GameController::class,
+        'schedules' => ScheduleController::class,
+        'tickets' => SupportTicketController::class,
+    ]);
 });

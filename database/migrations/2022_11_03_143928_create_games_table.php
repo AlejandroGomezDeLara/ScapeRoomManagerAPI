@@ -16,10 +16,24 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('rating')->nullable();
+            $table->integer('reviews')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postal_code')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('description');
-            $table->text('images');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('game_categories');
+            $table->unsignedBigInteger('subcategory_id')->nullable();
+            $table->foreign('subcategory_id')->references('id')->on('game_subcategories');
+            $table->string('description')->nullable();
+            $table->text('images')->nullable();
+            $table->integer('min_people')->nullable();
+            $table->integer('max_people')->nullable();
+            $table->integer('min_duration')->nullable();
+            $table->integer('max_duration')->nullable();
+            $table->integer('min_price')->nullable();
             $table->timestamps();
         });
     }

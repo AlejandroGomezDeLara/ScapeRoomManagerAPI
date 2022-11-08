@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\game;
+use App\Models\GameSubcategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class GameController extends Controller
+class GameSubcategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        return Game::with('category')->with('subcategory')->get();
+        return GameSubcategory::all();
     }
 
     /**
@@ -42,10 +41,10 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\game  $game
+     * @param  \App\Models\GameSubcategory  $gameSubcategory
      * @return \Illuminate\Http\Response
      */
-    public function show(game $game)
+    public function show(GameSubcategory $gameSubcategory)
     {
         //
     }
@@ -53,10 +52,10 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\game  $game
+     * @param  \App\Models\GameSubcategory  $gameSubcategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(game $game)
+    public function edit(GameSubcategory $gameSubcategory)
     {
         //
     }
@@ -65,10 +64,10 @@ class GameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\game  $game
+     * @param  \App\Models\GameSubcategory  $gameSubcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, game $game)
+    public function update(Request $request, GameSubcategory $gameSubcategory)
     {
         //
     }
@@ -76,10 +75,10 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\game  $game
+     * @param  \App\Models\GameSubcategory  $gameSubcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(game $game)
+    public function destroy(GameSubcategory $gameSubcategory)
     {
         //
     }
