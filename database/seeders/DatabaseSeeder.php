@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
 
         Game::create([
             'name' => 'Los Invitados',
-            'rating' => 4,
+            'rating' => 2.3,
             'reviews' => 123,
             'user_id' => 3,
             'address' => 'C/Alberto Durán Tejera nº5, Rota, Cádiz',
@@ -131,7 +131,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Laser Space',
             'rating' => 3,
             'reviews' => 12,
-            'user_id' => 4,
+            'user_id' => 4.85,
             'address' => 'Plaza Emperador Carlos V,  nº 8 (junto al Simply), Jerez',
             'city' => 'Jerez',
             'postal_code' => 11405,
@@ -143,6 +143,24 @@ class DatabaseSeeder extends Seeder
             'max_duration' => 120,
             'min_price' => 21,
             'category_id' => 2,
+        ]);
+
+        Game::create([
+            'name' => 'Carts Area Sur',
+            'rating' => 4.2,
+            'reviews' => 24,
+            'user_id' => 4,
+            'address' => 'Plaza Emperador Carlos V,  nº 8 (junto al Simply), Jerez',
+            'city' => 'Jerez',
+            'postal_code' => 11401,
+            'description' => 'Los mejores Carts de jerez suu',
+            'images' => 'assets/imgs/carts.jpeg',
+            'min_people' => 12,
+            'max_people' => 30,
+            'min_duration' => 60,
+            'max_duration' => 180,
+            'min_price' => 35,
+            'category_id' => 3,
         ]);
     }
 }
