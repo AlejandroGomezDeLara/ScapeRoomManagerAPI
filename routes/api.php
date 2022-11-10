@@ -3,10 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\GameCategoryController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameSubcategoryController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SupportTicketController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +36,8 @@ Route::group(['prefix' => 'auth'], function () {
         'reservations' => ReservationController::class,
         'employees' => EmployeeController::class,
         'games' => GameController::class,
+        'categories'=>GameCategoryController::class,
+        'subcategories'=>GameSubcategoryController::class,
         'schedules' => ScheduleController::class,
         'tickets' => SupportTicketController::class,
     ]);

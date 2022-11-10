@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\game;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class GameController extends Controller
 {
@@ -13,9 +13,68 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Game::with('category')->with('subcategory')->get();
+        
+        if(isset($request)){
+
+            /* Filtros */
+            $max_price = $request->max_price;
+            $min_price = $request->min_price;
+            $max_people = $request->max_people;
+            $min_people = $request->min_people;
+            $min_duration = $request->min_duration;            
+            $categories= preg_split('@,@', $request->selected_categories, -1, PREG_SPLIT_NO_EMPTY);
+            $subcategories= preg_split('@,@', $request->selected_subcategories, -1, PREG_SPLIT_NO_EMPTY);
+
+            /* ordenación */
+
+            
+
+            if(!empty($categories) && !empty($subcategories)){
+                $games= Game::with('category')->with('user')->with('subcategory')
+                ->where('min_price','>=',$min_price)
+                ->where('min_price','<=',$max_price)
+                ->where('max_duration','>=',$min_duration)
+                ->where('max_people','>=',$min_people)
+                ->where('max_people','<=',$max_people)
+                ->whereIn('category_id',$categories)
+                ->get();
+            }else if(!empty($categories)){
+                $games= Game::with('category')->with('user')->with('subcategory')
+                ->where('min_price','>=',$min_price)
+                ->where('min_price','<=',$max_price)
+                ->where('max_duration','>=',$min_duration)
+                ->where('max_people','>=',$min_people)
+                ->where('max_people','<=',$max_people)
+                ->whereIn('category_id',$categories)
+                ->get();
+            }else if(!empty($subcategories)){
+                $games= Game::with('category')->with('user')->with('subcategory')
+                ->where('min_price','>=',$min_price)
+                ->where('min_price','<=',$max_price)
+                ->where('max_duration','>=',$min_duration)
+                ->where('max_people','>=',$min_people)
+                ->where('max_people','<=',$max_people)
+                ->whereIn('subcategory_id',$subcategories)
+                ->get();
+            }else{
+                $games= Game::with('category')->with('user')->with('subcategory')
+                ->where('min_price','>=',$min_price)
+                ->where('min_price','<=',$max_price)
+                ->where('max_duration','>=',$min_duration)
+                ->where('max_people','>=',$min_people)
+                ->where('max_people','<=',$max_people)
+                ->get();
+            }
+            
+            return $games;
+
+        }else{
+            return Game::with('category')->with('user')->with('subcategory')->get();
+        }
+
+       
     }
 
     /**

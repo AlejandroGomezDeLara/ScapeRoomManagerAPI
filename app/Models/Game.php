@@ -13,6 +13,10 @@ class Game extends Model
         return $this->belongsTo(GameCategory::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function subcategory(){
         return $this->belongsTo(GameSubcategory::class);
     }
