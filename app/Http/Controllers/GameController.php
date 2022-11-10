@@ -16,7 +16,7 @@ class GameController extends Controller
     public function index(Request $request)
     {
         
-        if(isset($request)){
+        if(count($request->all())>0){
 
             /* Filtros */
             $max_price = $request->max_price;
@@ -27,9 +27,10 @@ class GameController extends Controller
             $categories= preg_split('@,@', $request->selected_categories, -1, PREG_SPLIT_NO_EMPTY);
             $subcategories= preg_split('@,@', $request->selected_subcategories, -1, PREG_SPLIT_NO_EMPTY);
 
-            /* ordenación */
+            /* searchbar */
 
-            
+            $selected_name=$request->selected_name;
+            $selected_address=$request->selected_address;
 
             if(!empty($categories) && !empty($subcategories)){
                 $games= Game::with('category')->with('user')->with('subcategory')
@@ -39,6 +40,8 @@ class GameController extends Controller
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->whereIn('category_id',$categories)
+                ->where('name','like','%'.$selected_name.'%')
+                ->where('address','like','%'.$selected_address.'%')
                 ->get();
             }else if(!empty($categories)){
                 $games= Game::with('category')->with('user')->with('subcategory')
@@ -48,6 +51,8 @@ class GameController extends Controller
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->whereIn('category_id',$categories)
+                ->where('name','like','%'.$selected_name.'%')
+                ->where('address','like','%'.$selected_address.'%')
                 ->get();
             }else if(!empty($subcategories)){
                 $games= Game::with('category')->with('user')->with('subcategory')
@@ -57,6 +62,8 @@ class GameController extends Controller
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->whereIn('subcategory_id',$subcategories)
+                ->where('name','like','%'.$selected_name.'%')
+                ->where('address','like','%'.$selected_address.'%')
                 ->get();
             }else{
                 $games= Game::with('category')->with('user')->with('subcategory')
@@ -65,6 +72,9 @@ class GameController extends Controller
                 ->where('max_duration','>=',$min_duration)
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
+                ->where('name','like','%'.$selected_name.'%')
+                ->where('address','like','%'.$selected_address.'%')
+
                 ->get();
             }
             
