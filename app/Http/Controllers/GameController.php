@@ -15,7 +15,8 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        
+        $paginate=4;
+
         if(count($request->all())>0){
 
             /* Filtros */
@@ -23,7 +24,8 @@ class GameController extends Controller
             $min_price = $request->min_price;
             $max_people = $request->max_people;
             $min_people = $request->min_people;
-            $min_duration = $request->min_duration;            
+            $min_duration = $request->min_duration;    
+            $max_duration = $request->max_duration;                    
             $categories= preg_split('@,@', $request->selected_categories, -1, PREG_SPLIT_NO_EMPTY);
             $subcategories= preg_split('@,@', $request->selected_subcategories, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -37,45 +39,50 @@ class GameController extends Controller
                 ->where('min_price','>=',$min_price)
                 ->where('min_price','<=',$max_price)
                 ->where('max_duration','>=',$min_duration)
+                ->where('max_duration','<=',$max_duration)
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->whereIn('category_id',$categories)
                 ->where('name','like','%'.$selected_name.'%')
                 ->where('address','like','%'.$selected_address.'%')
-                ->get();
+                ->paginate($paginate);
+
             }else if(!empty($categories)){
                 $games= Game::with('category')->with('user')->with('subcategory')
                 ->where('min_price','>=',$min_price)
                 ->where('min_price','<=',$max_price)
                 ->where('max_duration','>=',$min_duration)
+                ->where('max_duration','<=',$max_duration)
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->whereIn('category_id',$categories)
                 ->where('name','like','%'.$selected_name.'%')
                 ->where('address','like','%'.$selected_address.'%')
-                ->get();
+                ->paginate($paginate);
+
             }else if(!empty($subcategories)){
                 $games= Game::with('category')->with('user')->with('subcategory')
                 ->where('min_price','>=',$min_price)
                 ->where('min_price','<=',$max_price)
                 ->where('max_duration','>=',$min_duration)
                 ->where('max_people','>=',$min_people)
+                ->where('max_duration','<=',$max_duration)
                 ->where('max_people','<=',$max_people)
                 ->whereIn('subcategory_id',$subcategories)
                 ->where('name','like','%'.$selected_name.'%')
                 ->where('address','like','%'.$selected_address.'%')
-                ->get();
+                ->paginate($paginate);
             }else{
                 $games= Game::with('category')->with('user')->with('subcategory')
                 ->where('min_price','>=',$min_price)
                 ->where('min_price','<=',$max_price)
                 ->where('max_duration','>=',$min_duration)
+                ->where('max_duration','<=',$max_duration)
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->where('name','like','%'.$selected_name.'%')
                 ->where('address','like','%'.$selected_address.'%')
-
-                ->get();
+                ->paginate($paginate);
             }
             
             return $games;
