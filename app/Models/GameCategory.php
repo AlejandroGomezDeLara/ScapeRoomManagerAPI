@@ -10,4 +10,8 @@ class GameCategory extends Model
     use HasFactory;
     public $timestamps=false;
 
+    public function images(){
+        return $this->hasMany(GameCategoryImage::class);
+    }
+
 }

@@ -15,8 +15,8 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $paginate=4;
-
+        $paginate=6;
+        
         if(count($request->all())>0){
 
             /* Filtros */
@@ -78,6 +78,7 @@ class GameController extends Controller
                 ->where('min_price','<=',$max_price)
                 ->where('max_duration','>=',$min_duration)
                 ->where('max_duration','<=',$max_duration)
+
                 ->where('max_people','>=',$min_people)
                 ->where('max_people','<=',$max_people)
                 ->where('name','like','%'.$selected_name.'%')

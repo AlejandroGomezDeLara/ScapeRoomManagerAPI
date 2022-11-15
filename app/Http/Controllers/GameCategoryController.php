@@ -14,7 +14,7 @@ class GameCategoryController extends Controller
      */
     public function index()
     {
-        return GameCategory::all();
+        return GameCategory::with('images')->get();
     }
 
     /**
@@ -44,9 +44,9 @@ class GameCategoryController extends Controller
      * @param  \App\Models\GameCategory  $gameCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(GameCategory $gameCategory)
+    public function show($id)
     {
-        //
+        return GameCategory::with('images')->find($id);
     }
 
     /**
