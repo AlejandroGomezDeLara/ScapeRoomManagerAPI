@@ -21,5 +21,8 @@ class Game extends Model
         return $this->belongsTo(GameSubcategory::class);
     }
 
+    public function openReservations(){
+        return $this->hasMany(OpenReservation::class);
+    }
 
 }
