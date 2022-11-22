@@ -122,9 +122,9 @@ class GameController extends Controller
      * @param  \App\Models\game  $game
      * @return \Illuminate\Http\Response
      */
-    public function show(game $game)
+    public function show($id)
     {
-        //
+        return Game::with('category')->with('user')->with('subcategory')->find($id);
     }
 
     /**

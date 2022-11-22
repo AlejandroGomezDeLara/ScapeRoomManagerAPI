@@ -103,8 +103,7 @@ class OpenReservationController extends Controller
                         ->where('max_people', '>=', $min_people)
                         ->where('max_people', '<=', $max_people)
                         ->where('name', 'like', '%' . $selected_name . '%')
-                        ->where('address', 'like', '%' . $selected_address . '%')
-                        ->where('city', 'like', '%' . $selected_address . '%');
+                        ->where('address', 'like', '%' . $selected_address . '%');
                 })
                 
                 ->get();
