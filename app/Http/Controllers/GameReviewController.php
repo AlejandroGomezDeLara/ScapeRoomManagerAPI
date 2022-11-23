@@ -14,10 +14,14 @@ class GameReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct() {
+        $this->middleware('auth:api', array('only' => array('store')));
+    }
+
     public function index($id)
     {
         $per_page=5;
-        $reviews=GameReview::where('game_id',$id)->with('user')->paginate($per_page);
+        $reviews=GameReview::where('game_id',$id)->with('user')->orderBy('created_at','desc')->paginate($per_page);
         return $reviews;
     }
 
@@ -44,7 +48,9 @@ class GameReviewController extends Controller
             'user_id'=>Auth::id(),
             'stars'=>$request->stars,
             'game_id'=>$request->game_id,
-            'image'=>isset($request->image) ? $request->image : null
+            'image'=>isset($request->image) ? $request->image : null,
+            'created_at'=>now(),
+            'updated_at'=>now()
         ]);
 
         //Actualizamos el rating del game para el listado
