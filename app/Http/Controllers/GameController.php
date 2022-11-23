@@ -90,7 +90,7 @@ class GameController extends Controller
             foreach($games as $game){
                 $reviewsCount=GameReview::where('game_id',$game["id"])->count();
                 $avgStars=GameReview::where('game_id',$game["id"])->avg('stars'); 
-                $firstReview=GameReview::where('game_id',$game["id"])->first();
+                $firstReview=GameReview::where('game_id',$game["id"])->with('user')->orderBy('stars','desc')->orderBy('created_at','desc')->first();
                 $game->reviewsCount=$reviewsCount;
                 $game->rating=number_format((float)$avgStars, 2, '.', '');
                 $game->firstReview=$firstReview;

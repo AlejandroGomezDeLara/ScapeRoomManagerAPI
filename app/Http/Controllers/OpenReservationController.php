@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GameReview;
 use App\Models\OpenReservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -107,6 +108,10 @@ class OpenReservationController extends Controller
                 })
                 
                 ->get();
+        }
+        foreach($openReservations as $reservation){
+            $avgStars=GameReview::where('game_id',$reservation->game["id"])->avg('stars'); 
+            $reservation->game->rating=number_format((float)$avgStars, 2, '.', '');
         }
         return $openReservations;
     }
