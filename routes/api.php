@@ -5,6 +5,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GameCategoryController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameReviewController;
+use App\Http\Controllers\GameReviewSummaryController;
 use App\Http\Controllers\GameSubcategoryController;
 use App\Http\Controllers\OpenReservationController;
 use App\Http\Controllers\ReservationController;
@@ -37,6 +39,8 @@ Route::group(['prefix' => 'auth'], function () {
         'reservations' => OpenReservationController::class,
         'employees' => EmployeeController::class,
         'games' => GameController::class,
+        'games.reviews'=>GameReviewController::class,
+        'games.reviews-summary'=>GameReviewSummaryController::class,
         'categories'=>GameCategoryController::class,
         'subcategories'=>GameSubcategoryController::class,
         'schedules' => ScheduleController::class,
