@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\game;
+use App\Models\GameReview;
 use Illuminate\Http\Request;
 
 
@@ -86,6 +87,14 @@ class GameController extends Controller
                 ->paginate($paginate);
             }
             
+            foreach($games as $game){
+                $reviewsCount=GameReview::where('game_id',$game["id"])->count();
+                $avgStars=GameReview::where('game_id',$game["id"])->avg('stars'); 
+                $firstReview=GameReview::where('game_id',$game["id"])->first();
+                $game->reviewsCount=$reviewsCount;
+                $game->rating=number_format((float)$avgStars, 2, '.', '');
+                $game->firstReview=$firstReview;
+            }
             return $games;
 
         }else{
