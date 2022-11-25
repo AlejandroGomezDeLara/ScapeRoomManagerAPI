@@ -5,6 +5,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GameCategoryController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameOpenReservationController;
+use App\Http\Controllers\GameReservationHourController;
 use App\Http\Controllers\GameReviewController;
 use App\Http\Controllers\GameReviewSummaryController;
 use App\Http\Controllers\GameSubcategoryController;
@@ -12,7 +14,7 @@ use App\Http\Controllers\OpenReservationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SupportTicketController;
-
+use App\Models\GameReservationHour;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +38,8 @@ Route::group(['prefix' => 'auth'], function () {
         'games' => GameController::class,
         'games.reviews'=>GameReviewController::class, 
         'games.reviews-summary'=>GameReviewSummaryController::class,
+        'games.open-reservations'=>GameOpenReservationController::class,
+        'games.reservation-hours'=>GameReservationHourController::class,
         'categories'=>GameCategoryController::class,
         'subcategories'=>GameSubcategoryController::class,
         'schedules' => ScheduleController::class,

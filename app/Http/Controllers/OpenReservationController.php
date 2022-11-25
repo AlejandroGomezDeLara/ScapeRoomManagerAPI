@@ -41,6 +41,7 @@ class OpenReservationController extends Controller
                 ->whereIn('game_category_id', $categories)
                 ->whereIn('game_subcategory_id', $subcategories)
                 ->whereDate('date', Carbon::today())
+                ->orderBy('date','asc')
                 ->whereRaw('actual_people < max_people')
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
@@ -60,6 +61,7 @@ class OpenReservationController extends Controller
                 ->where('price_per_user', '>=', $min_price)
                 ->where('price_per_user', '<=', $max_price)
                 ->whereDate('date', Carbon::today())
+                ->orderBy('date','desc')
                 ->whereRaw('actual_people < max_people')
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
@@ -79,6 +81,7 @@ class OpenReservationController extends Controller
                 ->where('price_per_user', '<=', $max_price)
                 ->whereIn('game_subcategory_id', $subcategories)
                 ->whereDate('date', Carbon::today())
+                ->orderBy('date','desc')
                 ->whereRaw('actual_people < max_people')
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
@@ -97,6 +100,7 @@ class OpenReservationController extends Controller
                 ->where('price_per_user', '>=', $min_price)
                 ->where('price_per_user', '<=', $max_price)
                 ->whereDate('date', Carbon::today())
+                ->orderBy('date','desc')
                 ->whereRaw('actual_people < max_people')
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)

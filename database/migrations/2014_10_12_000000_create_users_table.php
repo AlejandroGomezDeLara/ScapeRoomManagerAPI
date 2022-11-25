@@ -20,8 +20,12 @@ class CreateUsersTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles');
             $table->string('email')->unique();
             $table->string('avatar')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('instagram_user')->nullable();
+            $table->string('facebook_user')->nullable();
+            $table->string('twitter_user')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -133,7 +133,7 @@ class GameController extends Controller
      */
     public function show($id)
     {
-        return Game::with('category')->with('user')->with('subcategory')->find($id);
+        return Game::with('category')->with('schedule')->with('user')->with('subcategory')->find($id);
     }
 
     /**

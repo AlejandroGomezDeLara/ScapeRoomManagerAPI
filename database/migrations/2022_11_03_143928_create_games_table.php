@@ -17,7 +17,7 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('rating')->nullable();
-            $table->integer('reviews')->nullable();
+            $table->integer('reviews_count')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('postal_code')->nullable();
@@ -34,6 +34,9 @@ class CreateGamesTable extends Migration
             $table->integer('min_duration')->nullable();
             $table->integer('max_duration')->nullable();
             $table->integer('min_price')->nullable();
+            $table->integer('funly_points')->nullable();
+            $table->integer('difficulty')->nullable();
+
             $table->timestamps();
         });
     }
