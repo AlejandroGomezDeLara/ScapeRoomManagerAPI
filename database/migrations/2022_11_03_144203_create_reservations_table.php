@@ -21,13 +21,12 @@ class CreateReservationsTable extends Migration
             $table->foreign('game_id')->references('id')->on('games');
             $table->unsignedBigInteger('game_price_id');
             $table->foreign('game_price_id')->references('id')->on('game_prices');
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employees');
-            $table->time('time');
             $table->integer('people');
+            $table->unsignedBigInteger('game_hour_id');
+            $table->foreign('game_hour_id')->references('id')->on('game_reservation_hours');
             $table->date('date');
-            $table->boolean('paid');
-            $table->boolean('confirmed');
+            $table->boolean('paid')->default(0);
+            $table->boolean('confirmed')->default(0);
             $table->timestamps();
         });
     }

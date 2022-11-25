@@ -14,7 +14,7 @@ class GameReservationHourController extends Controller
      */
     public function index($game_id)
     {
-        return GameReservationHour::where('game_id',$game_id)->get();
+        return GameReservationHour::where('game_id',$game_id)->with('reservation')->with('openReservation')->get();
     }
 
     /**

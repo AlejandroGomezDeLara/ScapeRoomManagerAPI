@@ -11,6 +11,7 @@ class GameOpenReservationController extends Controller
         return OpenReservation::with('users')
         ->with('game')
         ->with('gameCategory')
+        ->with('gameReservationHour')
         ->with('gameSubcategory')
         ->whereDate('date', Carbon::today())
         ->where('game_id',$game_id)

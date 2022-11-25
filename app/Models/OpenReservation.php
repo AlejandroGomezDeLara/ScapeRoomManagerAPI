@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OpenReservation extends Model
 {
     use HasFactory;
+    public $table='open_reservations';
     public $guarded=['id'];
 
     public function users(){
@@ -21,5 +22,8 @@ class OpenReservation extends Model
     }
     public function gameSubcategory(){
         return $this->belongsTo(GameSubcategory::class);
+    }
+    public function gameReservationHour(){
+        return $this->belongsTo(GameReservationHour::class);
     }
 }

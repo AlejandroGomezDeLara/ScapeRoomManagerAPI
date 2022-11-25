@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +17,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return Reservation::where('user_id',Auth::id())->get();
-
+        return Reservation::where('user_id', Auth::id())->get();
     }
 
     /**
@@ -37,7 +38,24 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $game = Game::find($request->game_id);
+        $reservation = Reservation::create([
+            'hour_id' => $request->hour_id,
+            'date' => $request->date,
+            'game_id' => $game["id"],
+            'people'=>$request->people,
+            'game_price_id' => $request->game_price_id,
+            'game_reservation_hour_id' => $request->game_reservation_hour_id,
+            'created_at'=>now(),
+            'updated_at'=>now(),
+            'confirmed'=>0,
+            'paid'=>0,
+            'date'=>Carbon::parse($request->date),
+            'user_id'=>Auth::id()
+        ]);
+        return response()->json([
+            "reserva" => $reservation
+        ]);
     }
 
     /**

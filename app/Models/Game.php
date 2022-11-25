@@ -35,4 +35,8 @@ class Game extends Model
         return $this->hasMany(Schedule::class);
     }
 
+    public function prices(){
+        return $this->hasMany(GamePrice::class);
+    }
+
 }

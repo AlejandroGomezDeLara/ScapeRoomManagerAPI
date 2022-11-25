@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class GamePrice extends Model
 {
     use HasFactory;
+    public $guarded=['id'];
+     
 }

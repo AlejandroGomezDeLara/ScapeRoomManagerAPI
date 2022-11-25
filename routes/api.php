@@ -49,6 +49,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout', [AuthController::class,'logout']);
         Route::get('user', [AuthController::class,'user']);
+        Route::resources([
+            'reservations' => ReservationController::class
+        ]);
         Route::post('games\{id}\reviews', [GameReviewController::class,'store']);
     });
    

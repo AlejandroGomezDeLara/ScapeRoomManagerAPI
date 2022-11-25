@@ -27,11 +27,14 @@ class CreateOpenReservationsTable extends Migration
             $table->integer('min_people');
             $table->integer('actual_people');
             $table->date('date');
+            $table->unsignedBigInteger('game_reservation_hour_id');
+            $table->foreign('game_reservation_hour_id')->references('id')->on('game_reservation_hours');
             $table->time('hour');
             $table->decimal('price_per_user');
             $table->boolean('closed');
             $table->boolean('paid');
             $table->boolean('confirmed');
+            
             $table->timestamps();
         });
     }
