@@ -33,7 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', [AuthController::class,'signup']);
 
     Route::resources([
-        'reservations' => OpenReservationController::class,
+        'open-reservations' => OpenReservationController::class,
         'employees' => EmployeeController::class,
         'games' => GameController::class,
         'games.reviews'=>GameReviewController::class, 
