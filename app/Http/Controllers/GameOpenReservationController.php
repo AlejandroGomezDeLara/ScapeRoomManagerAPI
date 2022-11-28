@@ -16,6 +16,7 @@ class GameOpenReservationController extends Controller
         ->whereDate('date', Carbon::today())
         ->where('game_id',$game_id)
         ->orderBy('date','asc')
+        ->where('completed',0)
         ->get();
     }
 }

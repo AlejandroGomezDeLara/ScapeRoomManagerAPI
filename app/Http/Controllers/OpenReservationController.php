@@ -44,6 +44,7 @@ class OpenReservationController extends Controller
                 ->whereDate('date', Carbon::today())
                 ->orderBy('date','asc')
                 ->whereRaw('actual_people < max_people')
+                ->where('completed',0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -65,6 +66,7 @@ class OpenReservationController extends Controller
                 ->whereDate('date', Carbon::today())
                 ->orderBy('date','desc')
                 ->whereRaw('actual_people < max_people')
+                ->where('completed',0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -86,6 +88,7 @@ class OpenReservationController extends Controller
                 ->whereDate('date', Carbon::today())
                 ->orderBy('date','desc')
                 ->whereRaw('actual_people < max_people')
+                ->where('completed',0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -106,6 +109,7 @@ class OpenReservationController extends Controller
                 ->whereDate('date', Carbon::today())
                 ->orderBy('date','desc')
                 ->whereRaw('actual_people < max_people')
+                ->where('completed',0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)

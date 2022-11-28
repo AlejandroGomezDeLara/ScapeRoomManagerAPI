@@ -34,7 +34,7 @@ class CreateOpenReservationsTable extends Migration
             $table->boolean('closed');
             $table->boolean('paid');
             $table->boolean('confirmed');
-            
+            $table->boolean('completed')->default(0);
             $table->timestamps();
         });
     }

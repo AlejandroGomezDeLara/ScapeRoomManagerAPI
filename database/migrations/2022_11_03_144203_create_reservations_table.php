@@ -27,6 +27,7 @@ class CreateReservationsTable extends Migration
             $table->date('date');
             $table->boolean('paid')->default(0);
             $table->boolean('confirmed')->default(0);
+            $table->boolean('completed')->default(0);
             $table->timestamps();
         });
     }

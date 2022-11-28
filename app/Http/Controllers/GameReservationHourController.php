@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\GameReservationHour;
+use App\Models\OpenReservation;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class GameReservationHourController extends Controller
@@ -14,7 +16,15 @@ class GameReservationHourController extends Controller
      */
     public function index($game_id)
     {
-        return GameReservationHour::where('game_id',$game_id)->with('reservation')->with('openReservation')->get();
+        $hours = GameReservationHour::where('game_id', $game_id)->get();
+
+        foreach ($hours as $hour) {
+            $hour->reservation = Reservation::where('game_reservation_hour_id', $hour["id"])
+                ->where('completed', '=', 0)->get();
+            $hour->open_reservation = OpenReservation::where('game_reservation_hour_id', $hour["id"])
+                ->where('completed', '=', 0)->get();
+        }
+        return $hours;
     }
 
     /**
