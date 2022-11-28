@@ -18,7 +18,7 @@ class GameReviewSummaryController extends Controller
 
         $reviewsCount=GameReview::where('game_id',$id)->count();
         $avgStars=GameReview::where('game_id',$id)->avg('stars'); 
-        $firstReview=GameReview::where('game_id',$id)->first();
+        $featuredReviews=GameReview::where('game_id',$id)->with('user')->orderBy('stars','desc')->orderBy('created_at','desc')->limit(2)->get();
         return response()->json([
             "fiveStars"=>$fiveStars,
             "fourStars"=>$fourStars,
@@ -26,7 +26,7 @@ class GameReviewSummaryController extends Controller
             "twoStars"=>$twoStars,
             "oneStars"=>$oneStars,
             "reviewsCount"=>$reviewsCount,
-            "firstReview"=>$firstReview,
+            "featuredReviews"=>$featuredReviews,
             "avgStars"=>number_format((float)$avgStars, 2, '.', ''),
         ]);
     } 
