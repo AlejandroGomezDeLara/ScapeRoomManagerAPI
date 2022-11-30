@@ -13,7 +13,7 @@ class GameOpenReservationController extends Controller
         ->with('gameCategory')
         ->with('gameReservationHour')
         ->with('gameSubcategory')
-        ->whereDate('date', Carbon::now('UTC'))
+        ->whereDate('date','>=', Carbon::now('GMT+1'))
         ->where('game_id',$game_id)
         ->orderBy('date','asc')
         ->where('completed',0)

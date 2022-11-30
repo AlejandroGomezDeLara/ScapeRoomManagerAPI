@@ -29,6 +29,7 @@ class CreateGamesTable extends Migration
             $table->foreign('subcategory_id')->references('id')->on('game_subcategories');
             $table->string('description')->nullable();
             $table->text('images')->nullable();
+            $table->integer('reservation_margin_hours')->nullable();
             $table->integer('min_people')->nullable();
             $table->integer('max_people')->nullable();
             $table->integer('min_duration')->nullable();
