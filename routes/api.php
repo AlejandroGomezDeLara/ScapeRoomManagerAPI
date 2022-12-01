@@ -11,6 +11,7 @@ use App\Http\Controllers\GameReviewController;
 use App\Http\Controllers\GameReviewSummaryController;
 use App\Http\Controllers\GameSubcategoryController;
 use App\Http\Controllers\OpenReservationController;
+use App\Http\Controllers\OpenReservationUserController;
 use App\Http\Controllers\RecomendationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ScheduleController;
@@ -35,6 +36,7 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::resources([
         'open-reservations' => OpenReservationController::class,
+        'open-reservations.users'=>OpenReservationUserController::class,
         'employees' => EmployeeController::class,
         'games' => GameController::class,
         'games.reviews'=>GameReviewController::class, 
@@ -56,6 +58,8 @@ Route::group(['prefix' => 'auth'], function () {
             'reservations' => ReservationController::class
         ]);
         Route::post('games\{id}\reviews', [GameReviewController::class,'store']);
+        Route::post('open-reservations', [OpenReservationController::class,'store']);
+
     });
    
 });

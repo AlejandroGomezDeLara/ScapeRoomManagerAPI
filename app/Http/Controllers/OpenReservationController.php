@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\GameReview;
 use App\Models\OpenReservation;
+use App\Models\OpenReservationUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OpenReservationController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -41,10 +46,10 @@ class OpenReservationController extends Controller
                 ->where('price_per_user', '<=', $max_price)
                 ->whereIn('game_category_id', $categories)
                 ->whereIn('game_subcategory_id', $subcategories)
-                ->whereDate('date','>=', Carbon::now('GMT+1'))
-                ->orderBy('date','asc')
+                ->whereDate('date', '>=', Carbon::now('GMT+1'))
+                ->orderBy('date', 'asc')
                 ->whereRaw('actual_people < max_people')
-                ->where('completed',0)
+                ->where('completed', 0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -63,10 +68,10 @@ class OpenReservationController extends Controller
                 ->whereIn('game_category_id', $categories)
                 ->where('price_per_user', '>=', $min_price)
                 ->where('price_per_user', '<=', $max_price)
-                ->whereDate('date','>=', Carbon::now('GMT+1'))
-                ->orderBy('date','desc')
+                ->whereDate('date', '>=', Carbon::now('GMT+1'))
+                ->orderBy('date', 'desc')
                 ->whereRaw('actual_people < max_people')
-                ->where('completed',0)
+                ->where('completed', 0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -85,10 +90,10 @@ class OpenReservationController extends Controller
                 ->where('price_per_user', '>=', $min_price)
                 ->where('price_per_user', '<=', $max_price)
                 ->whereIn('game_subcategory_id', $subcategories)
-                ->whereDate('date','>=', Carbon::now('GMT+1'))
-                ->orderBy('date','desc')
+                ->whereDate('date', '>=', Carbon::now('GMT+1'))
+                ->orderBy('date', 'desc')
                 ->whereRaw('actual_people < max_people')
-                ->where('completed',0)
+                ->where('completed', 0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -106,10 +111,10 @@ class OpenReservationController extends Controller
                 ->with('gameReservationHour')
                 ->where('price_per_user', '>=', $min_price)
                 ->where('price_per_user', '<=', $max_price)
-                ->whereDate('date','>=', Carbon::now('GMT+1'))
-                ->orderBy('date','desc')
+                ->whereDate('date', '>=', Carbon::now('GMT+1'))
+                ->orderBy('date', 'desc')
                 ->whereRaw('actual_people < max_people')
-                ->where('completed',0)
+                ->where('completed', 0)
                 ->whereHas('game', function ($q) use ($min_duration, $max_duration, $min_people, $max_people, $selected_address, $selected_name) {
                     $q->where('max_duration', '>=', $min_duration)
                         ->where('max_duration', '<=', $max_duration)
@@ -118,12 +123,12 @@ class OpenReservationController extends Controller
                         ->where('name', 'like', '%' . $selected_name . '%')
                         ->where('address', 'like', '%' . $selected_address . '%');
                 })
-                
+
                 ->get();
         }
-        foreach($openReservations as $reservation){
-            $avgStars=GameReview::where('game_id',$reservation->game["id"])->avg('stars'); 
-            $reservation->game->rating=number_format((float)$avgStars, 2, '.', '');
+        foreach ($openReservations as $reservation) {
+            $avgStars = GameReview::where('game_id', $reservation->game["id"])->avg('stars');
+            $reservation->game->rating = number_format((float)$avgStars, 2, '.', '');
         }
         return $openReservations;
     }
@@ -146,7 +151,87 @@ class OpenReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $openReservationId = $request->id;
+        if (!isset($openReservationId)) {
+            $game = Game::find($request->game_id);
+
+            $openReservation = OpenReservation::create([
+                'game_id' => $game["id"],
+                'game_category_id' => $game["category_id"],
+                'game_subcategory_id' => $game["subcategory_id"],
+                'max_people' => $game["max_people"],
+                'min_people' => $game["min_people"],
+                'actual_people' => 1,
+                'date' => Carbon::parse($request->date),
+                'price_per_user' => $game["min_price"],
+                'closed' => 0,
+                'paid' => 0,
+                'confirmed' => 0,
+                'completed' => 0,
+                'game_reservation_hour_id' => $request->game_reservation_hour["id"],
+                'created_at' => now(),
+                'updated_at' => now()
+
+            ]);
+
+            OpenReservationUser::create([
+                'open_reservation_id' => $openReservation->id,
+                'user_id' => Auth::id(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            return response()->json([
+                'message' => 'Reserva creada correctamente',
+                'reservation' => $openReservation
+            ]);
+        } else {
+
+
+            $openReservation = OpenReservation::find($openReservationId);
+            $people = OpenReservationUser::where('open_reservation_id', $openReservationId)->count();
+
+            if ($people < $openReservation->max_people) {
+                $reservationUser = OpenReservationUser::where('user_id', Auth::id())->where('open_reservation_id', $openReservationId)->first();
+
+                if (!isset($reservationUser)) {
+
+                    $added = OpenReservationUser::create([
+                        'open_reservation_id' => $openReservationId,
+                        'user_id' => Auth::id(),
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+
+                    if ($added) {
+                        $people = OpenReservationUser::where('open_reservation_id', $openReservationId)->count();
+
+                        OpenReservation::where('id', $openReservationId)->update([
+                            'actual_people' => $people
+                        ]);
+
+                        if ($people == $openReservation->max_people) {
+                            OpenReservation::where('id', $openReservationId)->update([
+                                'closed' => 1
+                            ]);
+                        }
+                    }
+                } else {
+                    return response()->json([
+                        'error' => 'Ya estás añadido a esa reserva'
+                    ], 500);
+                }
+
+
+                return response()->json([
+                    'message' => 'Unido correctamente a la reserva'
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'La reserva ya está llena'
+                ], 500);
+            }
+        }
     }
 
     /**

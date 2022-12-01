@@ -35,7 +35,7 @@ class OpenReservationUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      
     }
 
     /**

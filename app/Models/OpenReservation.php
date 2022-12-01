@@ -12,7 +12,7 @@ class OpenReservation extends Model
     public $guarded=['id'];
 
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'open_reservation_users');
     }
     public function game(){
         return $this->belongsTo(Game::class);
