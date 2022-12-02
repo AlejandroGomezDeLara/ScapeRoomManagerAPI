@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\GameAddressController;
 use App\Http\Controllers\GameCategoryController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameOpenReservationController;
@@ -48,7 +49,7 @@ Route::group(['prefix' => 'auth'], function () {
         'schedules' => ScheduleController::class,
         'tickets' => SupportTicketController::class,
         'recomendations' => RecomendationController::class,
-
+        'addresses'=>GameAddressController::class
     ]);
     
     Route::group(['middleware' => 'auth:api'], function () {
