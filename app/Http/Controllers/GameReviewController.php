@@ -6,6 +6,7 @@ use App\Models\Game;
 use App\Models\GameReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class GameReviewController extends Controller
 {
@@ -43,6 +44,20 @@ class GameReviewController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->get('image')!=null){
+            $img=$request->get('image');
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace('data:image/jpeg;base64,', '', $img);
+            $img = str_replace('data:image/jpg;base64,', '', $img);
+
+            $img = str_replace(' ', '+', $img);
+            $img=base64_decode($img);
+            $imageName =date('mdYHis') . uniqid() .'.png';
+            Storage::disk('public')->put('reviews/'.$imageName, $img);
+            $path="reviews/".$imageName;
+            $request->merge(['image'=>$path]);
+
+        }
         $review=GameReview::create([
             'text'=>$request->text,
             'user_id'=>Auth::id(),

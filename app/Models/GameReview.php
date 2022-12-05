@@ -9,7 +9,11 @@ class GameReview extends Model
 {
     use HasFactory;
     public $guarded=["id"];
-
+    
+    public function getImageAttribute($value){
+        if($this->attributes['image'])
+        return url('storage/'.$this->attributes['image']);
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }

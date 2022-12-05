@@ -39,4 +39,9 @@ class Game extends Model
         return $this->hasMany(GamePrice::class);
     }
 
+    public function images(){
+        return $this->hasMany(GameImage::class);
+
+    }
+
 }
