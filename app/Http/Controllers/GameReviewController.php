@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\GameImage;
 use App\Models\GameReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +58,12 @@ class GameReviewController extends Controller
             $path="reviews/".$imageName;
             $request->merge(['image'=>$path]);
 
+            GameImage::create([
+                'game_id'=>$request->game_id,
+                'image'=>$request->image
+            ]);
         }
+       
         $review=GameReview::create([
             'text'=>$request->text,
             'user_id'=>Auth::id(),
