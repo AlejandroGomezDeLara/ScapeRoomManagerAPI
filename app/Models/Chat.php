@@ -13,4 +13,8 @@ class Chat extends Model
     public function users(){
         return $this->belongsToMany(User::class,'chat_users');
     }
+
+    public function openReservation(){
+        return $this->belongsTo(OpenReservation::class);
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChatMessage;
+use App\Models\ChatUser;
+use App\Models\NewMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +17,10 @@ class ChatMessageController extends Controller
      */
     public function index($chat_id)
     {
-        return ChatMessage::where('chat_id',$chat_id)->with('user')->get();
+        $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->get();
+        $viewMessages=NewMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->delete();
+
+        return $messages;
     }
 
     /**
@@ -36,12 +41,25 @@ class ChatMessageController extends Controller
      */
     public function store($chat_id,Request $request)
     {
-        ChatMessage::create([
+        $message=ChatMessage::create([
             'chat_id'=>$chat_id,
             'user_id'=>Auth::id(),
             'text'=>$request->text,
             'created_at'=>now()
         ]);
+        if(isset($message)){
+            //Creamos los mensajes no vistos
+            $users=ChatUser::where('chat_id',$chat_id)->get();
+            foreach ($users as $user) {
+                NewMessage::create([
+                    'user_id'=>$user->user_id,
+                    'chat_id'=>$chat_id,
+                    'chat_message_id'=>$message->id
+                ]);
+            }
+        }
+        
+
     }
 
     /**
