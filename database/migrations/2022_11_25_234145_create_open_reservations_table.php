@@ -13,7 +13,6 @@ class CreateOpenReservationsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('open_reservations');
 
         Schema::create('open_reservations', function (Blueprint $table) {
             $table->id();

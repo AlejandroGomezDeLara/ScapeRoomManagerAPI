@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
+use App\Models\ChatUser;
 use App\Models\Game;
 use App\Models\GameReview;
 use App\Models\OpenReservation;
@@ -181,6 +183,22 @@ class OpenReservationController extends Controller
                 'updated_at' => now()
             ]);
 
+            $chat = Chat::create([
+                'name' => 'Reserva ' . $game["name"],
+                'open_reservation_id' => $openReservation->id,
+                'image' => $game["image"] ? $game["image"] : null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+
+            ChatUser::create([
+                'user_id' => Auth::id(),
+                'chat_id' => $chat->id
+            ]);
+
+            
+
             return response()->json([
                 'message' => 'Reserva creada correctamente',
                 'reservation' => $openReservation
@@ -204,10 +222,18 @@ class OpenReservationController extends Controller
                     ]);
 
                     if ($added) {
+
                         $people = OpenReservationUser::where('open_reservation_id', $openReservationId)->count();
 
                         OpenReservation::where('id', $openReservationId)->update([
                             'actual_people' => $people
+                        ]);
+
+                        $chat = Chat::where('open_reservation_id', $openReservation->id)->first();
+
+                        ChatUser::create([
+                            'user_id' => Auth::id(),
+                            'chat_id' => $chat->id
                         ]);
 
                         if ($people == $openReservation->max_people) {

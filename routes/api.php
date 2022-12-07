@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GameAddressController;
@@ -56,7 +58,9 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', [AuthController::class,'logout']);
         Route::get('user', [AuthController::class,'user']);
         Route::resources([
-            'reservations' => ReservationController::class
+            'reservations' => ReservationController::class,
+            'chats'=>ChatController::class,
+            'chats.messages'=>ChatMessageController::class,
         ]);
         Route::post('games\{id}\reviews', [GameReviewController::class,'store']);
         Route::post('open-reservations', [OpenReservationController::class,'store']);
