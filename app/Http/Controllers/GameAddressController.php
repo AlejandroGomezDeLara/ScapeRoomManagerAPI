@@ -76,6 +76,8 @@ class GameAddressController extends Controller
             $address = new stdClass();
             $address->id = $game->id;
             $address->address = $game->address;
+            $address->game_name=$game->name;
+            $address->game_image=$game->image;
             array_push($addresses, $address);
         }
         return $addresses;

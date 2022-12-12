@@ -19,7 +19,6 @@ class ChatMessageController extends Controller
     {
         $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->get();
         $viewMessages=NewMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->delete();
-
         return $messages;
     }
 
