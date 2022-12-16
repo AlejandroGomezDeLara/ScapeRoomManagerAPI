@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('alias');
             $table->unsignedBigInteger('role_id')->default(2);
             $table->foreign('role_id')->references('id')->on('roles');
             $table->string('email')->unique();
@@ -26,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('instagram_user')->nullable();
             $table->string('facebook_user')->nullable();
             $table->string('twitter_user')->nullable();
+            $table->integer('funly_points')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

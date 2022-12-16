@@ -15,6 +15,7 @@ use App\Http\Controllers\GameReviewSummaryController;
 use App\Http\Controllers\GameSubcategoryController;
 use App\Http\Controllers\OpenReservationController;
 use App\Http\Controllers\OpenReservationUserController;
+use App\Http\Controllers\RankingController;
 use App\Http\Controllers\RecomendationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ScheduleController;
@@ -51,7 +52,9 @@ Route::group(['prefix' => 'auth'], function () {
         'schedules' => ScheduleController::class,
         'tickets' => SupportTicketController::class,
         'recomendations' => RecomendationController::class,
-        'addresses'=>GameAddressController::class
+        'addresses'=>GameAddressController::class,
+        'ranking'=>RankingController::class
+
     ]);
     
     Route::group(['middleware' => 'auth:api'], function () {

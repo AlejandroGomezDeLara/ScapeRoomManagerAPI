@@ -10,7 +10,6 @@ class GameAddressController extends Controller
 {
     public function index(Request $request)
     {
-        $addresses = [];
         $max_price = $request->max_price;
         $min_price = $request->min_price;
         $max_people = $request->max_people;
@@ -71,15 +70,6 @@ class GameAddressController extends Controller
                 ->get();
         }
 
-
-        foreach ($games as $game) {
-            $address = new stdClass();
-            $address->id = $game->id;
-            $address->address = $game->address;
-            $address->game_name=$game->name;
-            $address->game_image=$game->image;
-            array_push($addresses, $address);
-        }
-        return $addresses;
+        return $games;
     }
 }
