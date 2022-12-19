@@ -19,6 +19,11 @@ class User extends Authenticatable
      *
      * @var array
      */
+    public function getAvatarAttribute($value){
+        if($this->attributes['avatar'])
+        return url('storage/'.$this->attributes['avatar']);
+    }
+
     protected $hidden = [
         'password',
         'remember_token',

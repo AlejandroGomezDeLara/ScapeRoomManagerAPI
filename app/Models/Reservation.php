@@ -9,4 +9,16 @@ class Reservation extends Model
 {
     use HasFactory;
     public $guarded=['id'];
+
+    public function game(){
+        return $this->belongsTo(Game::class);
+    }
+
+    public function gameReservationHour(){
+        return $this->belongsTo(GameReservationHour::class);
+    }
+
+    public function gamePrice(){
+        return $this->belongsTo(GamePrice::class);
+    }
 }

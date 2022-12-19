@@ -20,6 +20,9 @@ use App\Http\Controllers\RecomendationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserOpenReservationController;
+use App\Http\Controllers\UserReservationsController;
 use App\Models\GameReservationHour;
 use Illuminate\Support\Facades\Route;
 
@@ -53,7 +56,7 @@ Route::group(['prefix' => 'auth'], function () {
         'tickets' => SupportTicketController::class,
         'recomendations' => RecomendationController::class,
         'addresses'=>GameAddressController::class,
-        'ranking'=>RankingController::class
+        'ranking'=>RankingController::class,
 
     ]);
     
@@ -64,6 +67,10 @@ Route::group(['prefix' => 'auth'], function () {
             'reservations' => ReservationController::class,
             'chats'=>ChatController::class,
             'chats.messages'=>ChatMessageController::class,
+            'user-open-reservations'=>UserOpenReservationController::class,
+            'user-reservations'=>UserReservationsController::class,
+
+            'users'=>UserController::class,
         ]);
         Route::post('games\{id}\reviews', [GameReviewController::class,'store']);
         Route::post('open-reservations', [OpenReservationController::class,'store']);
