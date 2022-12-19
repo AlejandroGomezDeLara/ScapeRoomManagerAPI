@@ -16,10 +16,10 @@ class CreateGameSubcategoriesTable extends Migration
         Schema::create('game_subcategories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('color');
-            $table->unsignedBigInteger('category_id');
+            $table->text('description')->nullable();
+            $table->string('color')->nullable();
+            $table->string('background_color')->nullable();
             $table->foreign('category_id')->references('id')->on('game_categories');
-            $table->string('background_color');
         });
     }
 

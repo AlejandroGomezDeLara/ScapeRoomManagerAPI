@@ -16,9 +16,9 @@ class CreateGameCategoriesTable extends Migration
         Schema::create('game_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->string('color');
-            $table->string('background_color');
+            $table->text('description')->nullable();
+            $table->string('color')->nullable();
+            $table->string('background_color')->nullable();
         });
     }
 
