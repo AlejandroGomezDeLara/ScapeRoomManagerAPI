@@ -19,6 +19,7 @@ class CreateGameSubcategoriesTable extends Migration
             $table->text('description')->nullable();
             $table->string('color')->nullable();
             $table->string('background_color')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('game_categories');
         });
     }
