@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
             'min_price' => 12,
             'category_id' => 1,
             'subcategory_id' => 1,
-            'dificulty'=>8
+            'difficulty'=>8
         ]);
 
         Game::create([
@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
             'max_duration' => 120,
             'min_price' => 21,
             'category_id' => 2,
-            'dificulty'=>6
+            'difficulty'=>6
         ]);
 
         Game::create([
@@ -163,7 +163,7 @@ class DatabaseSeeder extends Seeder
             'max_duration' => 180,
             'min_price' => 35,
             'category_id' => 3,
-            'dificulty'=>9
+            'difficulty'=>9
         ]);
     }
 }
