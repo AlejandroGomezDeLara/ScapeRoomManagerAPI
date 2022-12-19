@@ -111,13 +111,13 @@ class DatabaseSeeder extends Seeder
         Game::create([
             'name' => 'Los Invitados',
             'rating' => 2.3,
-            'reviews' => 123,
+            'reviews_count' => 123,
             'user_id' => 3,
-            'address' => 'C/Alberto Durán Tejera nº5, Rota, Cádiz',
+            'address' => 'C. Medina del Campo, 11520 Rota, Cádiz',
             'city' => 'Rota',
-            'postal_code' => 11520,
+            'postal_code' => '11520',
             'description' => 'Este es el mejor Scape que existe porque es de miedo jaja',
-            'images' => 'assets/imgs/scape.jpeg',
+            'image' => 'https://cdn.escapistas.club/images/daddoo-escape-room/los-invitados/Invitados.jpg-escapistasclubresized/w400.jpg',
             'min_people' => 2,
             'max_people' => 6,
             'min_duration' => 20,
@@ -125,42 +125,45 @@ class DatabaseSeeder extends Seeder
             'min_price' => 12,
             'category_id' => 1,
             'subcategory_id' => 1,
+            'dificulty'=>8
         ]);
 
         Game::create([
             'name' => 'Laser Space',
             'rating' => 3,
-            'reviews' => 12,
+            'reviews_count' => 23,
             'user_id' => 4.85,
-            'address' => 'Plaza Emperador Carlos V,  nº 8 (junto al Simply), Jerez',
-            'city' => 'Jerez',
-            'postal_code' => 11405,
+            'address' => 'Plaza Emperador Carlos V,  nº 8 (junto al Simply), Madrid',
+            'city' => 'Madrid',
+            'postal_code' => '11405',
             'description' => 'Este es el mejor Laser Tag que existe porque es de miedo jaja',
-            'images' => 'assets/imgs/laser-tag.jpeg',
+            'image' => 'assets/imgs/laser-tag.jpeg',
             'min_people' => 5,
             'max_people' => 20,
             'min_duration' => 30,
             'max_duration' => 120,
             'min_price' => 21,
             'category_id' => 2,
+            'dificulty'=>6
         ]);
 
         Game::create([
-            'name' => 'Carts Area Sur',
+            'name' => 'Karts Luz Shopping',
             'rating' => 4.2,
-            'reviews' => 24,
+            'reviews_count' => 13,
             'user_id' => 4,
-            'address' => 'Plaza Emperador Carlos V,  nº 8 (junto al Simply), Jerez',
+            'address' => 'Rda. Aurora Boreal, s/n, Local 31, 11407 Jerez de la Frontera, Cádiz',
             'city' => 'Jerez',
-            'postal_code' => 11401,
-            'description' => 'Los mejores Carts de jerez suu',
-            'images' => 'assets/imgs/carts.jpeg',
+            'postal_code' => '11401',
+            'description' => 'Dos circuitos, indoor y outdoor, para disfrutar al máximo del placer de pilotar un kart. Opciones para todas las edades y más actividades como Escape Room y nuestro Simulador F1 que te harán vivir una experiencia que no podrás olvidar fácilmente.',
+            'image' => 'https://racingdakartjerez.es/wp-content/uploads/circuito_indoor_actual.jpg',
             'min_people' => 12,
             'max_people' => 30,
             'min_duration' => 60,
             'max_duration' => 180,
             'min_price' => 35,
             'category_id' => 3,
+            'dificulty'=>9
         ]);
     }
 }
