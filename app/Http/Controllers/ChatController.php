@@ -21,15 +21,15 @@ class ChatController extends Controller
     {
 
         $chatUsers = ChatUser::where('user_id', Auth::id())->get();
-        $chats=[];
+        $chats = [];
         foreach ($chatUsers as $user) {
-            $chat=Chat::with('users')->find($user->chat_id);
-            $open_reservation=OpenReservation::with('gameReservationHour')->find($chat->open_reservation_id);
-            $chat->open_reservation=$open_reservation;
-            $chat->unread_messages_count=NewMessage::where('user_id',Auth::id())->where('chat_id',$chat->id)->count();
-            $last_message=ChatMessage::where('chat_id',$user->chat_id)->with('user')->orderBy('created_at','desc')->first();
-            $chat->last_message=$last_message;
-            $chats[]=$chat;
+            $chat = Chat::with('users')->find($user->chat_id);
+            $open_reservation = OpenReservation::with('gameReservationHour')->find($chat->open_reservation_id);
+            $chat->open_reservation = $open_reservation;
+            $chat->unread_messages_count = NewMessage::where('user_id', Auth::id())->where('chat_id', $chat->id)->count();
+            $last_message = ChatMessage::where('chat_id', $user->chat_id)->with('user')->orderBy('created_at', 'desc')->first();
+            $chat->last_message = $last_message;
+            $chats[] = $chat;
         }
         return $chats;
     }
@@ -63,7 +63,14 @@ class ChatController extends Controller
      */
     public function show($chat_id)
     {
-        return Chat::find($chat_id);
+
+        $chat = Chat::with('users')->find($chat_id);
+        $open_reservation = OpenReservation::with('gameReservationHour')->find($chat->open_reservation_id);
+        $chat->open_reservation = $open_reservation;
+        $chat->unread_messages_count = NewMessage::where('user_id', Auth::id())->where('chat_id', $chat->id)->count();
+        
+
+        return $chat;
     }
 
     /**
