@@ -61,9 +61,9 @@ class ChatController extends Controller
      * @param  \App\Models\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function show(Chat $chat)
+    public function show($chat_id)
     {
-        //
+        return Chat::find($chat_id);
     }
 
     /**
