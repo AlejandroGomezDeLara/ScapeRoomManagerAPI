@@ -24,8 +24,7 @@ class GameReviewController extends Controller
     {
         $per_page=5;
         $reviews=GameReview::where('game_id',$id)->with('user')->orderBy('created_at','desc')->paginate($per_page);
-
-        return response() -> json($reviews, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
+        return $reviews;
     }
 
     /**
@@ -55,7 +54,7 @@ class GameReviewController extends Controller
             $img = str_replace(' ', '+', $img);
             $img=base64_decode($img);
             $imageName =date('mdYHis') . uniqid() .'.png';
-            Storage::disk('local')->put('reviews/'.$imageName, $img);
+            Storage::disk('public')->put('reviews/'.$imageName, $img);
             $path="reviews/".$imageName;
             $request->merge(['image'=>$path]);
 
