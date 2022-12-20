@@ -46,9 +46,10 @@ class ChatMessageController extends Controller
             'text'=>$request->text,
             'created_at'=>now()
         ]);
+
         if(isset($message)){
             //Creamos los mensajes no vistos
-            $users=ChatUser::where('chat_id',$chat_id)->get();
+            $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
             foreach ($users as $user) {
                 NewMessage::create([
                     'user_id'=>$user->user_id,
