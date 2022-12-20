@@ -4,7 +4,9 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
-
+/* header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: *, Content-Type, Authorization");
+header("Access-Control-Allow-Methods: *"); */
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
