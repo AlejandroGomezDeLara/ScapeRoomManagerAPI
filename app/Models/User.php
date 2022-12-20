@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     public function getAvatarAttribute($value){
         if($this->attributes['avatar'])
-        return url('storage/'.$this->attributes['avatar']);
+        return (str_contains($this->attributes['avatar'],'https') || str_contains($this->attributes['avatar'],'http')) ? $this->attributes['avatar'] :url('storage/'.$this->attributes['avatar']);
     }
 
     protected $hidden = [
