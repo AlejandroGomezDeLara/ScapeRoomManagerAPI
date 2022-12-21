@@ -15,7 +15,7 @@ class CreateChatMessagesTable extends Migration
     {
         Schema::create('chat_messages', function (Blueprint $table) {
             $table->id();
-            $table->text('text');
+            $table->text('text')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->unsignedBigInteger('user_id');

@@ -7,6 +7,7 @@ use App\Models\ChatUser;
 use App\Models\NewMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ChatMessageController extends Controller
 {
@@ -18,7 +19,7 @@ class ChatMessageController extends Controller
     public function index($chat_id)
     {
         $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->get();
-
+        
         return response() -> json($messages, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
@@ -40,8 +41,21 @@ class ChatMessageController extends Controller
      */
     public function store($chat_id,Request $request)
     {
+        if ($request->get('image') != null) {
+            $img=$request->get('image');
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace('data:image/jpeg;base64,', '', $img);
+            $img = str_replace('data:image/jpg;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $img=base64_decode($img);
+            $imageName =date('mdYHis') . uniqid() .'.png';
+            Storage::disk('local')->put('chats/'.$imageName, $img);
+            $path="chats/".$imageName;
+            $request->merge(['image'=>$path]);  
+        }
         $message=ChatMessage::create([
             'chat_id'=>$chat_id,
+            'image'=>$request->image ? $request->image : null,
             'user_id'=>Auth::id(),
             'text'=>$request->text,
             'created_at'=>now()
