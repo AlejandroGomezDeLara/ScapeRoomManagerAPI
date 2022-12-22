@@ -19,7 +19,7 @@ class NewMessageController extends Controller
         $count=NewMessage::where('user_id',Auth::id())->count();
         $messages=[];
         if($count>0){
-           $messages=NewMessage::where('user_id',Auth::id())->with('message')->get();
+           $messages=NewMessage::where('user_id',Auth::id())->with('chatMessage')->get();
         }
         return response()->json([
             'count'=>$count,

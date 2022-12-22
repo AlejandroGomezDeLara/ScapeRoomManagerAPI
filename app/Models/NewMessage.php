@@ -11,7 +11,7 @@ class NewMessage extends Model
     public $guarded=['id'];
     public $timestamps=false;
 
-    public function message(){
+    public function chatMessage(){
         return $this->belongsTo(ChatMessage::class);
     }
 }
