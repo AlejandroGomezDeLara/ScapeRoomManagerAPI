@@ -13,6 +13,7 @@ use App\Http\Controllers\GameReservationHourController;
 use App\Http\Controllers\GameReviewController;
 use App\Http\Controllers\GameReviewSummaryController;
 use App\Http\Controllers\GameSubcategoryController;
+use App\Http\Controllers\NewMessageController;
 use App\Http\Controllers\OpenReservationController;
 use App\Http\Controllers\OpenReservationUserController;
 use App\Http\Controllers\RankingController;
@@ -69,7 +70,7 @@ Route::group(['prefix' => 'auth','middleware'=>'cors'], function () {
             'chats.messages'=>ChatMessageController::class,
             'user-open-reservations'=>UserOpenReservationController::class,
             'user-reservations'=>UserReservationsController::class,
-
+            'new-messages'=>NewMessageController::class,
             'users'=>UserController::class,
         ]);
         Route::post('games\{id}\reviews', [GameReviewController::class,'store']);

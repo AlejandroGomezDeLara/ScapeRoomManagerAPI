@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NewMessageController extends Controller
 {
@@ -14,7 +15,7 @@ class NewMessageController extends Controller
      */
     public function index()
     {
-        //
+        return NewMessage::where('user_id',Auth::id())->count();
     }
 
     /**
