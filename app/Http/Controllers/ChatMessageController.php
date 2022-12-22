@@ -18,8 +18,6 @@ class ChatMessageController extends Controller
      */
     public function index($chat_id)
     {
-        NewMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->delete();
-
         $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->get();
         
         return response() -> json($messages, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);

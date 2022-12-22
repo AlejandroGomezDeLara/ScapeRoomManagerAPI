@@ -15,7 +15,9 @@ class NewMessageController extends Controller
      */
     public function index()
     {
-        return NewMessage::where('user_id',Auth::id())->count();
+        $count=NewMessage::where('user_id',Auth::id())->count();
+        
+        return $count;
     }
 
     /**
