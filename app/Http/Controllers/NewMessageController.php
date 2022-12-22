@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChatMessage;
 use App\Models\NewMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,14 @@ class NewMessageController extends Controller
     public function index()
     {
         $count=NewMessage::where('user_id',Auth::id())->count();
-        
-        return $count;
+        $messages=[];
+        if($count>0){
+           $messages=NewMessage::where('user_id',Auth::id())->with('message')->get();
+        }
+        return response()->json([
+            'count'=>$count,
+            'messages'=>$messages
+        ]);
     }
 
     /**
