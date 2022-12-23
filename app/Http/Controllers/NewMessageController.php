@@ -21,11 +21,12 @@ class NewMessageController extends Controller
         if ($count > 0) {
 
             $last_message = NewMessage::where('user_id', Auth::id())->with('chatMessage')->orderBy('id', 'desc')->first();
-            $last_message->chatMessage->user = User::find($last_message->chatMessage->user_id);
+            if(isset($last_message))
+                $last_message->chatMessage->user = User::find($last_message->chatMessage->user_id);
         }
         return response()->json([
             'count' => $count,
-            'last_message' => $last_message
+            'last_message' => isset($last_message) ? $last_message :null
         ]);
     }
 

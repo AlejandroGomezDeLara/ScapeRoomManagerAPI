@@ -16,9 +16,10 @@ class ChatMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($chat_id)
+    public function index($chat_id,Request $request)
     {
-        $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->get();
+        $per_page=isset($request->per_page) ? $request->per_page : 50;
+        $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->latest()->take($per_page)->get();
         
         return response() -> json($messages, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
     }
