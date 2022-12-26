@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppTokenController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatMessageController;
@@ -58,9 +59,10 @@ Route::group(['prefix' => 'auth','middleware'=>'cors'], function () {
         'recomendations' => RecomendationController::class,
         'addresses'=>GameAddressController::class,
         'ranking'=>RankingController::class,
+        'tokens'=>AppTokenController::class,
 
     ]);
-    
+
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout', [AuthController::class,'logout']);
         Route::get('user', [AuthController::class,'user']);
