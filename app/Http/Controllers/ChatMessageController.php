@@ -81,8 +81,8 @@ class ChatMessageController extends Controller
 
 
             $msg_payload = array(
-                'mtitle' => $request->text,
-                'mdesc' => '',
+                'mtitle' => Auth::user()->name,
+                'mdesc' => $request->text,
             );
     
             try {
