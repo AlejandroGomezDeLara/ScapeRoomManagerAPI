@@ -71,8 +71,11 @@ class ChatMessageController extends Controller
         if(isset($message)){
 
             $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
+            $user_ids = [];
 
-            $user_ids = ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get()->pluck('id');
+            foreach($users as $user){
+                $user_ids[]=$user->user_id;
+            }
 
             $registerTokensAppUsers = AppToken::whereIn('user_id', $user_ids)->get();
 
