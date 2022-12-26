@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppToken;
 use App\Models\ChatMessage;
 use App\Models\ChatUser;
 use App\Models\NewMessage;
@@ -71,7 +72,10 @@ class ChatMessageController extends Controller
 
             $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
 
-            $registerTokensAppUsers = $users->pluck('id');
+            $user_ids = $users->pluck('id');
+
+            $registerTokensAppUsers = AppToken::whereIn('user_id', $user_ids)->get();
+
 
             $msg_payload = array(
                 'mtitle' => $request->text,
