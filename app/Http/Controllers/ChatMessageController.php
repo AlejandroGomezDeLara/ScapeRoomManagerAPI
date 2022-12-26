@@ -83,10 +83,14 @@ class ChatMessageController extends Controller
             );
     
             try {
-                PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
+                $error=PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
+                return response()->json([
+                    "error"=>$error
+                ]);
             } catch (Exception $e) {
-                Log::error('Error al enviar notificaciones push en NotificationHelper función storeAndSendPushNotifications()');
-                Log::error($e);
+                return response()->json([
+                    "error"=>$e
+                ]);
             }            
             //Creamos los mensajes no vistos
             foreach ($users as $user) {
