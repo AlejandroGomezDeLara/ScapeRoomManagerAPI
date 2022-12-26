@@ -41,6 +41,7 @@ class PushNotifications {
         $message = array(
             'title' => $data['mtitle'],
             'message' => $data['mdesc'],
+            'image'=>$data['mimage']
            
         );
 
