@@ -84,7 +84,7 @@ class ChatMessageController extends Controller
                 'mtitle' => $request->text,
                 'mdesc' => '',
             );
-            return $user_ids;
+            return $registerTokensAppUsers;
     
             try {
                 PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
