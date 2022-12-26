@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\AppToken;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AppTokenController extends Controller
 {
@@ -13,11 +12,12 @@ class AppTokenController extends Controller
     {
         $registerToken = $request->registerToken;
         $platform = $request->platform;
+        $user_id= $request->user_id;
 
-        $deletedRows = AppToken::where('user_id', Auth::id())->delete();
+        $deletedRows = AppToken::where('user_id', $user_id)->delete();
 
         $token = new AppToken([
-            'user_id' => Auth::id(),
+            'user_id' => $user_id,
             'platform' => $platform,
             'registerToken' => $registerToken
         ]);
