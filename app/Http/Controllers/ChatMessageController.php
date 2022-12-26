@@ -81,16 +81,13 @@ class ChatMessageController extends Controller
                 'mtitle' => $request->text,
                 'mdesc' => '',
             );
+
+            return $registerTokensAppUsers;
     
             try {
-                $error=PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
-                return response()->json([
-                    "error"=>$error
-                ]);
+                PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
             } catch (Exception $e) {
-                return response()->json([
-                    "error"=>$e
-                ]);
+               return $e;
             }            
             //Creamos los mensajes no vistos
             foreach ($users as $user) {
