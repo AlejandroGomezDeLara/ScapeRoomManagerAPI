@@ -8,6 +8,7 @@ use App\Models\NewMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use NotificationHelper;
 
 class ChatMessageController extends Controller
 {
@@ -62,9 +63,17 @@ class ChatMessageController extends Controller
             'created_at'=>now()
         ]);
 
+        //Mandamos la notificacion push a los usuarios
+
         if(isset($message)){
-            //Creamos los mensajes no vistos
+
             $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
+
+            $registerTokensAppUsers = $users->pluck('id');
+
+            NotificationHelper::storeAndSendPushNotifications($registerTokensAppUsers,$request->text);
+            
+            //Creamos los mensajes no vistos
             foreach ($users as $user) {
                 NewMessage::create([
                     'user_id'=>$user->user_id,
