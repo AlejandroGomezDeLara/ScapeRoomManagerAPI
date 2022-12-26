@@ -42,6 +42,7 @@ class PushNotifications {
             'title' => $data['mtitle'],
             'body' => $data['mdesc'],
             'notId'=>10,
+            'content-available' => '1',
             'apiData'=>$data['data']
         );
 
