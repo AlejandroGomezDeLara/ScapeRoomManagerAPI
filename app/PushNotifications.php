@@ -41,20 +41,8 @@ class PushNotifications {
         $message = array(
             'title' => $data['mtitle'],
             'message' => $data['mdesc'],
-            'notId' => rand(1, 100),
-            //'apiData' => $data['data'],
-            'msgcnt' => 1,
-            'vibrate' => 1
+           
         );
-
-        /* $message = array(
-            'title' => $data['mtitle'],
-            'message' => $data['mdesc'],
-            'notId' => rand(1, 100),
-            'tickerText' => '',
-            'msgcnt' => 1,
-            'vibrate' => 1
-        ); */
 
         $headers = array(
             'Authorization: key=' .self::$API_ACCESS_KEY,
