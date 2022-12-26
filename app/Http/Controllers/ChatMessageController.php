@@ -72,7 +72,7 @@ class ChatMessageController extends Controller
 
             $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
 
-            $user_ids = $users->pluck('id');
+            $user_ids = ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get()->pluck('id');
 
             $registerTokensAppUsers = AppToken::whereIn('user_id', $user_ids)->get();
 
@@ -82,7 +82,6 @@ class ChatMessageController extends Controller
                 'mdesc' => '',
             );
 
-            return $registerTokensAppUsers;
     
             try {
                 PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
