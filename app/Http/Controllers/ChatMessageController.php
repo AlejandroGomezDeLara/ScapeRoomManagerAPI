@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\ChatMessage;
 use App\Models\ChatUser;
 use App\Models\NewMessage;
+use App\PushNotifications;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use NotificationHelper;
 
 class ChatMessageController extends Controller
 {
@@ -71,8 +73,17 @@ class ChatMessageController extends Controller
 
             $registerTokensAppUsers = $users->pluck('id');
 
-            NotificationHelper::storeAndSendPushNotifications($registerTokensAppUsers,$request->text);
-            
+            $msg_payload = array(
+                'mtitle' => $request->text,
+                'mdesc' => '',
+            );
+    
+            try {
+                PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
+            } catch (Exception $e) {
+                Log::error('Error al enviar notificaciones push en NotificationHelper función storeAndSendPushNotifications()');
+                Log::error($e);
+            }            
             //Creamos los mensajes no vistos
             foreach ($users as $user) {
                 NewMessage::create([
