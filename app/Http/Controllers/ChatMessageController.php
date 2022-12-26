@@ -99,7 +99,7 @@ class ChatMessageController extends Controller
                     'chat_message_id'=>$message->id
                 ]);
             }
-            return $registerTokensAppUsers;
+            return $msg_payload;
         }
         
 
