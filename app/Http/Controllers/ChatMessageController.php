@@ -83,7 +83,8 @@ class ChatMessageController extends Controller
             $msg_payload = array(
                 'mtitle' => Auth::user()->name,
                 'mdesc' => $request->text,
-                'mimage'=> Auth::user()->avatar
+                'mimage'=> Auth::user()->avatar,
+                'data'=>$chat_id
             );
     
             try {

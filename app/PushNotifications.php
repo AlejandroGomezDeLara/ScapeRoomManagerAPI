@@ -41,7 +41,7 @@ class PushNotifications {
         $message = array(
             'title' => $data['mtitle'],
             'message' => $data['mdesc'],
-            
+            'apiData'=>$data['data']
         );
 
         $headers = array(
@@ -53,7 +53,6 @@ class PushNotifications {
         $fields = array(
             'registration_ids' => array($reg_id),
             'data' => $message,
-            'image'=>$data['mimage'],
             'priority'=>'high'
         );
 
