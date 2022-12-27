@@ -85,10 +85,8 @@ class ChatMessageController extends Controller
 
             $registerTokensAppUsers = AppToken::whereIn('user_id', $user_ids)->get();
 
-            $date=new DateTime($open_reservation->date);
-            $date->format('jS M');
             $msg_payload = array(
-                'mtitle' => $chat->name . ' ' . $date,
+                'mtitle' => $chat->name . ' ' . $chat->open_reservation->date,
                 'mdesc' => Auth::user()->name . ': ' . $request->text,
                 'mimage' => $chat->image,
                 'data' => $chat_id
