@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AppToken;
+use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\ChatUser;
 use App\Models\NewMessage;
@@ -71,6 +72,7 @@ class ChatMessageController extends Controller
         if(isset($message)){
 
             $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
+            $chat=Chat::find($chat_id);
             $user_ids = [];
 
             foreach($users as $user){
@@ -81,9 +83,9 @@ class ChatMessageController extends Controller
 
 
             $msg_payload = array(
-                'mtitle' => Auth::user()->name,
-                'mdesc' => $request->text,
-                'mimage'=> Auth::user()->avatar,
+                'mtitle' => $chat->name,
+                'mdesc' => Auth::user()->name.': '.$request->text,
+                'mimage'=> $chat->image,
                 'data'=>$chat_id
             );
     
