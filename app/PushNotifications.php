@@ -40,9 +40,8 @@ class PushNotifications {
 
         $message = array(
             'title' => $data['mtitle'],
-            'body' => $data['mdesc'],
-            'notId'=>10,
-            'content-available' => '1',
+            'message' => $data['mdesc'],
+            'image'=>$data['mimage'],
             'apiData'=>$data['data']
         );
 
