@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\ChatUser;
 use App\Models\NewMessage;
+use App\Models\OpenReservation;
 use App\PushNotifications;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,12 +22,12 @@ class ChatMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($chat_id,Request $request)
+    public function index($chat_id, Request $request)
     {
-        $per_page=isset($request->per_page) ? $request->per_page : 50;
-        $messages=ChatMessage::where('chat_id',$chat_id)->with('user')->latest()->take($per_page)->get();
-        
-        return response() -> json($messages, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
+        $per_page = isset($request->per_page) ? $request->per_page : 50;
+        $messages = ChatMessage::where('chat_id', $chat_id)->with('user')->latest()->take($per_page)->get();
+
+        return response()->json($messages, 200, ['Content-type' => 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -45,67 +46,67 @@ class ChatMessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($chat_id,Request $request)
+    public function store($chat_id, Request $request)
     {
         if ($request->get('image') != null) {
-            $img=$request->get('image');
+            $img = $request->get('image');
             $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace('data:image/jpeg;base64,', '', $img);
             $img = str_replace('data:image/jpg;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
-            $img=base64_decode($img);
-            $imageName =date('mdYHis') . uniqid() .'.png';
-            Storage::disk('local')->put('chats/'.$imageName, $img);
-            $path="chats/".$imageName;
-            $request->merge(['image'=>$path]);  
+            $img = base64_decode($img);
+            $imageName = date('mdYHis') . uniqid() . '.png';
+            Storage::disk('local')->put('chats/' . $imageName, $img);
+            $path = "chats/" . $imageName;
+            $request->merge(['image' => $path]);
         }
-        $message=ChatMessage::create([
-            'chat_id'=>$chat_id,
-            'image'=>$request->image ? $request->image : null,
-            'user_id'=>Auth::id(),
-            'text'=>$request->text,
-            'created_at'=>now()
+        $message = ChatMessage::create([
+            'chat_id' => $chat_id,
+            'image' => $request->image ? $request->image : null,
+            'user_id' => Auth::id(),
+            'text' => $request->text,
+            'created_at' => now()
         ]);
 
         //Mandamos la notificacion push a los usuarios
 
-        if(isset($message)){
+        if (isset($message)) {
 
-            $users=ChatUser::where('chat_id',$chat_id)->where('user_id','!=',Auth::id())->get();
-            $chat=Chat::find($chat_id);
+            $users = ChatUser::where('chat_id', $chat_id)->where('user_id', '!=', Auth::id())->get();
+            $chat = Chat::find($chat_id);
+            $open_reservation = OpenReservation::find($chat->open_reservation_id);
+            $chat->open_reservation = $open_reservation;
             $user_ids = [];
 
-            foreach($users as $user){
-                $user_ids[]=$user->user_id;
+            foreach ($users as $user) {
+                $user_ids[] = $user->user_id;
             }
 
             $registerTokensAppUsers = AppToken::whereIn('user_id', $user_ids)->get();
 
 
             $msg_payload = array(
-                'mtitle' => $chat->name,
-                'mdesc' => Auth::user()->name.': '.$request->text,
-                'mimage'=> $chat->image,
-                'data'=>$chat_id
+                'mtitle' => $chat->name . ' ' . $chat->open_reservation->date->format('jS M'),
+                'mdesc' => Auth::user()->name . ': ' . $request->text,
+                'mimage' => $chat->image,
+                'data' => $chat_id
             );
-    
+
             try {
                 PushNotifications::sendNotifications($registerTokensAppUsers, $msg_payload);
             } catch (Exception $e) {
-               return $e;
-            }            
+                return $e;
+            }
             //Creamos los mensajes no vistos
             foreach ($users as $user) {
                 NewMessage::create([
-                    'user_id'=>$user->user_id,
-                    'chat_id'=>$chat_id,
-                    'chat_message_id'=>$message->id
+                    'user_id' => $user->user_id,
+                    'chat_id' => $chat_id,
+                    'chat_message_id' => $message->id
                 ]);
             }
             return $msg_payload;
         }
-        
-
     }
 
     /**
