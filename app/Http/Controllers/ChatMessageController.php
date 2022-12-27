@@ -9,6 +9,7 @@ use App\Models\ChatUser;
 use App\Models\NewMessage;
 use App\Models\OpenReservation;
 use App\PushNotifications;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,9 +85,10 @@ class ChatMessageController extends Controller
 
             $registerTokensAppUsers = AppToken::whereIn('user_id', $user_ids)->get();
 
-
+            $date=new DateTime($open_reservation->date);
+            $date->format('jS M');
             $msg_payload = array(
-                'mtitle' => $chat->name . ' ' . $chat->open_reservation->date->format('jS M'),
+                'mtitle' => $chat->name . ' ' . $date,
                 'mdesc' => Auth::user()->name . ': ' . $request->text,
                 'mimage' => $chat->image,
                 'data' => $chat_id
