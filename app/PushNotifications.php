@@ -55,7 +55,7 @@ class PushNotifications {
         // campos que se van a enviar a FCM
         $fields = array(
             'registration_ids' => array($reg_id),
-            'data' => $message,
+            'notification' => $message,
             'priority'=>'high'
         );
 
