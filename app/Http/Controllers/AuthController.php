@@ -20,7 +20,6 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role_id'=>2,
-            'avatar' => 'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-File.png',
             'password' => bcrypt($request->password),
             
         ]);

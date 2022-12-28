@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,5 +35,10 @@ class UserController extends Controller
         $user->update($request->all());
 
         return $user;
+    }
+
+    public function show($user_id)
+    {
+        return User::find($user_id);
     }
 }
