@@ -26,6 +26,19 @@ class UserController extends Controller
             $path="users/".$imageName;
             $request->merge(['avatar'=>$path]);  
         }
+        if ($request->get('upload_banner_image') != null) {
+            $img=$request->get('upload_banner_image');
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace('data:image/jpeg;base64,', '', $img);
+            $img = str_replace('data:image/jpg;base64,', '', $img);
+
+            $img = str_replace(' ', '+', $img);
+            $img=base64_decode($img);
+            $imageName =date('mdYHis') . uniqid() .'.png';
+            Storage::disk('public')->put('users/banners/'.$imageName, $img);
+            $path="users/banners/".$imageName;
+            $request->merge(['banner_img'=>$path]);  
+        }
 
         if ($request->password != '') {
             $request->password = bcrypt($request->password);

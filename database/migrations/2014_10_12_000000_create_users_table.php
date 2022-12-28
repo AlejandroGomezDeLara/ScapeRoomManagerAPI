@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles');
             $table->string('email')->unique();
             $table->string('avatar')->nullable();
+            $table->string('banner_img')->nullable();
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -28,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('facebook_user')->nullable();
             $table->string('twitter_user')->nullable();
             $table->integer('funly_points')->default(0);
+            $table->boolean('online')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

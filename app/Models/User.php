@@ -24,6 +24,11 @@ class User extends Authenticatable
         return (str_contains($this->attributes['avatar'],'https') || str_contains($this->attributes['avatar'],'http')) ? $this->attributes['avatar'] :url('storage/'.$this->attributes['avatar']);
     }
 
+    public function getBannerImgAttribute($value){
+        if($this->attributes['banner_img'])
+        return (str_contains($this->attributes['banner_img'],'https') || str_contains($this->attributes['banner_img'],'http')) ? $this->attributes['banner_img'] :url('storage/'.$this->attributes['banner_img']);
+    }
+
     protected $hidden = [
         'password',
         'remember_token',
