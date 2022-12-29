@@ -60,8 +60,11 @@ Route::group(['prefix' => 'auth','middleware'=>'cors'], function () {
         'addresses'=>GameAddressController::class,
         'ranking'=>RankingController::class,
         'tokens'=>AppTokenController::class,
+        'users'=>UserController::class,
 
     ]);
+
+
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout', [AuthController::class,'logout']);
@@ -73,8 +76,8 @@ Route::group(['prefix' => 'auth','middleware'=>'cors'], function () {
             'user-open-reservations'=>UserOpenReservationController::class,
             'user-reservations'=>UserReservationsController::class,
             'new-messages'=>NewMessageController::class,
-            'users'=>UserController::class,
         ]);
+        Route::post('users\{id}', [UserController::class,'update']);
         Route::post('games\{id}\reviews', [GameReviewController::class,'store']);
         Route::post('open-reservations', [OpenReservationController::class,'store']);
 

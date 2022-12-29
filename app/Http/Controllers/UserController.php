@@ -11,7 +11,7 @@ class UserController extends Controller
     public function update($user_id, Request $request)
     {
 
-        $user = $request->user();
+        $user = User::find($user_id);
         $request->request->remove('avatar');  
         if ($request->get('upload_image') != null) {
             $img=$request->get('upload_image');
