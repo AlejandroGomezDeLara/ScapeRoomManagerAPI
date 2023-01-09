@@ -91,8 +91,8 @@ class NewMessageController extends Controller
      * @param  \App\Models\NewMessage  $newMessage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NewMessage $newMessage)
+    public function destroy($chat_id)
     {
-        //
+        NewMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->delete();
     }
 }
