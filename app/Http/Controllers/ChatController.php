@@ -27,6 +27,7 @@ class ChatController extends Controller
             $open_reservation = OpenReservation::with('gameReservationHour')->find($chat->open_reservation_id);
             $chat->open_reservation = $open_reservation;
             $chat->unread_messages_count = NewMessage::where('user_id', Auth::id())->where('chat_id', $chat->id)->count();
+            $chat->unread_messages=NewMessage::where('user_id', Auth::id())->where('chat_id', $chat->id)->get();
             $last_message = ChatMessage::where('chat_id', $user->chat_id)->with('user')->orderBy('created_at', 'desc')->first();
             $chat->last_message = $last_message;
             $chats[] = $chat;
