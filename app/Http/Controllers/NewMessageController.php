@@ -93,6 +93,19 @@ class NewMessageController extends Controller
      */
     public function destroy($chat_id)
     {
-        NewMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->delete();
+        
+        $messages=ChatMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->get();
+
+        foreach($messages as $message){
+            NewMessage::where('chat_message_id',$message->id)->delete();
+            $new_messages=NewMessage::where('chat_id',$chat_id)->count();
+            if($new_messages){
+                $message->readed_at=now();
+            }
+        }
+
+        return response()->json([
+            "message"=>"Messages readed"
+        ]);
     }
 }
