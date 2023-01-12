@@ -94,13 +94,15 @@ class NewMessageController extends Controller
     public function destroy($chat_id)
     {
 
-        $messages = ChatMessage::where('user_id', Auth::id())->where('chat_id', $chat_id)->get();
+        //Obtenemos mensajes por ver del usuario
+        $unread_messages=NewMessage::where('user_id',Auth::id())->where('chat_id',$chat_id)->get();
 
-        foreach ($messages as $message) {
-            NewMessage::where('chat_message_id', $message->id)->delete();
-            $new_messages = NewMessage::where('chat_id', $chat_id)->where('user_id', '!=', Auth::id())->count();
-            if ($new_messages == 0) {
-                $message->readed_at = now();
+        foreach($unread_messages as $unread_message){
+            $message=ChatMessage::find($unread_message->chat_message_id);
+            $unread_message->delete();
+            $unread_messages_all_users=NewMessage::where('chat_message_id',$message->id)->count();
+            if($unread_messages_all_users<=0){
+                $message->readed_at=now();
                 $message->save();
             }
         }
