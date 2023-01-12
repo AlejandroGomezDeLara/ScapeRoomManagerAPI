@@ -101,6 +101,7 @@ class NewMessageController extends Controller
             $new_messages = NewMessage::where('chat_id', $chat_id)->where('user_id', '!=', Auth::id())->count();
             if ($new_messages == 0) {
                 $message->readed_at = now();
+                $message->save();
             }
         }
 
